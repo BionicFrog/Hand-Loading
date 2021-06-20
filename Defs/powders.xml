@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+<!--=============== Industrial powder ====================-->
+
+  <ThingDef ParentName="ResourceBase">
+    <defName>IndustrialPowder</defName>
+    <label>Industrial powder</label>
+    <description>Smokeless Powder.</description>
+    <graphicData>
+      <texPath>Things/Powders/ind_powder</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <resourceReadoutPriority>Middle</resourceReadoutPriority>
+    <soundInteract>Metal_Drop</soundInteract>
+    <soundDrop>Metal_Drop</soundDrop>
+    <stackLimit>1</stackLimit>
+    <useHitPoints>true</useHitPoints>
+    <statBases>
+      <MarketValue>4000</MarketValue>
+      <MaxHitPoints>100</MaxHitPoints>
+      <Mass>2</Mass>
+      <Flammability>3.2</Flammability>
+    </statBases>
+    <thingCategories>
+      <li>Items</li>
+    </thingCategories>
+    <drawGUIOverlay>false</drawGUIOverlay>
+    <tradeability>Sellable</tradeability>
+    <techLevel>Ultra</techLevel>
+    <tradeTags>
+      <li>ExoticMisc</li>
+    </tradeTags>
+  </ThingDef>
+  <comps>
+    <li Class="HandLoading.PowderCompProps">
+        <Powder>20</Powder>
+    </li>
+  </comps>
+</Defs>
