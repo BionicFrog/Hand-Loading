@@ -18,8 +18,7 @@ namespace HandLoading
 	public class HandLoadingWindow : Window
 	{
 
-		// Token: 0x17000026 RID: 38
-		// (get) Token: 0x06000172 RID: 370 RVA: 0x0000D029 File Offset: 0x0000B229
+	
 		public override Vector2 InitialSize
 		{
 			get
@@ -33,7 +32,7 @@ namespace HandLoading
 		{
 
 		}
-		public Texture poob2;
+		public Texture sometextureidk;
 		private int pint = 0;
 		public override void DoWindowContents(Rect inRect)
 		{
@@ -98,7 +97,7 @@ namespace HandLoading
 							Log.Message(SelectedProjectile.ToString());
 							Log.Error(ammodef_selected.ToString());
 							Texture poob = ammodef_selected.uiIcon;
-							poob2 = poob;
+							sometextureidk = poob;
 
 							
 						}));
@@ -145,6 +144,34 @@ namespace HandLoading
 				}
 				Find.WindowStack.Add(new FloatMenu(options2));
 				
+			}
+			Rect rectCasing = new Rect(inRect);
+			rectCasing.width = 100f;
+			rectCasing.height = 100f;
+			rectCasing = rectCasing.CenteredOnXIn(inRect);
+			rectCasing = rectCasing.CenteredOnYIn(inRect);
+			rectCasing.x += -320f;
+			rectCasing.y += 100f;
+			if (Widgets.ButtonText(rectCasing, "Choose Bullet's case material"))
+			{
+				var options2 = new List<FloatMenuOption>
+				{
+
+				};
+
+				List<ThingDef> somelist = DefDatabase<ThingDef>.AllDefs.ToList().Where<ThingDef>(L => L.stuffProps?.categories?.Contains(StuffCategoryDefOf.Metallic) == true).ToList();
+
+				foreach (ThingDef szteel in somelist)
+				{
+					FloatMenuOption floatmenuoption = new FloatMenuOption(szteel.label, (delegate
+					{
+						casematerial = szteel;
+					}));
+
+					options2.Add(floatmenuoption);
+				}
+				Find.WindowStack.Add(new FloatMenu(options2));
+
 			}
 			Rect rectPowder = new Rect(inRect);
 			rectPowder.width = 100f;
@@ -230,19 +257,14 @@ namespace HandLoading
 			if (Widgets.ButtonText(rect6, "Finish"))
 			{
 				CalculateAP();
-				MadeProjectile = new ThingDef() { label = "somethingagainProjectile", defName ="somethingPrjectile",graphicData = SelectedProjectile.graphicData, projectile = new ProjectilePropertiesCE() { damageDef = DamageDefOf.Bullet, armorPenetrationSharp = ArmorPenSharpCalculated, armorPenetrationBlunt = ArmorPenSharpCalculated, speed = CalculatedSpeed, flyOverhead = false} };
+				MadeProjectile = new ThingDef() { label = "somethingagainProjectile",  defName ="somethingPrjectile",graphicData = SelectedProjectile.graphicData, projectile = new ProjectilePropertiesCE() { damageDef = DamageDefOf.Bullet, armorPenetrationSharp = ArmorPenSharpCalculated, armorPenetrationBlunt = ArmorPenSharpCalculated, speed = CalculatedSpeed, flyOverhead = false, ai_IsIncendiary = false, dropsCasings = true, pelletCount = 1, stoppingPower = 2.5f} };
 			    MadeAmmoDef = new AmmoDef() {label ="somethingagain" , defName = "something", graphicData = ammodef_selected.graphicData, cookOffProjectile = MadeProjectile, projectile = MadeProjectile.projectile };
 				ammoclass_selected.ammoTypes.Add(new AmmoLink() {ammo = MadeAmmoDef, projectile = MadeProjectile});
 				foreach (AmmoLink amlink in ammoclass_selected.ammoTypes)
 				{
 					Log.Error(amlink.ToString());
 				}
-				List<AmmoDef> mysomelist = DefDatabase<AmmoDef>.AllDefs.ToList();
-				mysomelist.Add(MadeAmmoDef);
-				if (mysomelist.Find(AAA => AAA.defName == "something") != null)
-				{
-					Log.Error("it exists");
-				}
+				
 				
 				
 				
@@ -250,7 +272,7 @@ namespace HandLoading
 				this.Close();
 
 			}
-			GUI.DrawTexture(position, poob2);
+			GUI.DrawTexture(position, sometextureidk);
 
 
 			Text.Font = GameFont.Medium;
@@ -264,20 +286,37 @@ namespace HandLoading
 
 		}
 		public List<ThingDef> ThingDefsToAddToDatabase;
+
 		public string ProjectileShape;
+
 		public string AmmoDefLabel;
+
 		public float CalculatedSpeed;
+
 		public float ArmorPenSharpCalculated;
+
+		public float ArmorPenBluntCalculated;
+
 		public ThingDef MadeProjectile;
+
 		public ThingDef SelectedProjectile;
+
 		public AmmoDef MadeAmmoDef;
+
 		public float hardness_material_multiplier;
+
 		public ThingDef projectile_material;
+
 		public AmmoSetDef ammoclass_selected;
+
 		public AmmoDef ammodef_selected;
+
+		public ThingDef casematerial;
+
 		private static readonly Vector2 Test = new Vector2(100f, 140f);
-		private ThingDef deffer = ThingDefOf.Apparel_Parka;
-		//public static Texture poob = ContentFinder<Texture2D>.Get("Tymon/Bipod/open_bipod", true) as Texture;
+
+		
+		
 		public void CalculateAP()
 		{
 			float ShapeDoubleAP = 1f;
@@ -300,9 +339,14 @@ namespace HandLoading
 			ArmorPenSharpCalculated = propsCE.armorPenetrationSharp * (ShapeDoubleAP * hardness_material_multiplier);
 			Log.Message(ArmorPenSharpCalculated.ToString());
 		}
+		public void CalculateAPBlunt()
+		{
+			ArmorPenBluntCalculated = ArmorPenSharpCalculated * 2f;
+			Log.Message(ArmorPenBluntCalculated.ToString());
+		}
 
 
-		//private static Regex AllowedDefnamesRegex = new Regex("^[a-zA-Z0-9\\-_]*$");
+		
 	}
 	[DefOf]
 	public static class AmmoClassesDefOf
