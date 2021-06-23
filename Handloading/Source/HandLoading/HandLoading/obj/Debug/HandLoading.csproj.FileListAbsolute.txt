@@ -1,0 +1,5 @@
+F:\Steam\steamapps\common\RimWorld\Mods\Handloading\Assemblies\HandLoading.dll
+F:\Steam\steamapps\common\RimWorld\Mods\Handloading\Assemblies\HandLoading.pdb
+F:\Steam\steamapps\common\RimWorld\Mods\Handloading\Source\HandLoading\HandLoading\obj\Debug\HandLoading.csprojAssemblyReference.cache
+F:\Steam\steamapps\common\RimWorld\Mods\Handloading\Source\HandLoading\HandLoading\obj\Debug\HandLoading.dll
+F:\Steam\steamapps\common\RimWorld\Mods\Handloading\Source\HandLoading\HandLoading\obj\Debug\HandLoading.pdb
